@@ -1,24 +1,25 @@
 import { Text, View, Image, StyleSheet } from "react-native";
 import Ionicons from '@expo/vector-icons/Ionicons';
 
-const PostListItem = () => {
+const PostListItem = ({post}) => {
+    
     return (
         <View style={styles.container}>
             <View style={styles.imageContainer}>
-                <Image source={{ uri: 'https://image.shutterstock.com/image-photo/young-female-chiwawa-chihuahua-big-600w-1819496483.jpg' }}
+                <Image source={{ uri: post.image}}
                     style={styles.image}
                 />
             </View>
         
             <View>
-                <Text style={styles.title} numberOfLines={1}>Chiwawa</Text>
+                <Text style={styles.title} numberOfLines={1}>{post.title}</Text>
             </View>
             <View style={styles.row}>
                 <Text style={styles.location}>
-                    Arahal (Sevilla)
+                    {post.province}{post.location}
                 </Text>
                 <Text style={styles.date}>
-                    17-03-1995
+                   {post.date}
                 </Text>
             </View>
             <View style={[styles.row,styles.iconsContainer]}>

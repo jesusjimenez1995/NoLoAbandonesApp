@@ -1,14 +1,60 @@
+import React, { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { FlatList, ScrollView, StyleSheet, Text, View } from 'react-native';
 import PostListItem from './src/components/PostListItem';
+import Separator from './src/components/Separator';
+import axios from 'axios';
+
+
 
 export default function App() {
+
+  const API_URL = 'http://192.168.18.132:4000/api/posts/latestPosts';
+  const [data, setPostsData] = useState([]);
+  const [loading,setLoading] = useState(false);
+  const [page, setPage] = useState(0);
+
+  useEffect(()=>{
+
+  },[]);
+
+  const getPostsFromApi = async () => {
+
+    if(loading) return;
+
+    setLoading(true);
+   
+    const response = await axios.get(API_URL+'?page='+page+'&size=2');
+    setPostsData([...data,...response.data.content]);
+    setPage(page+1);
+    setLoading(false);
+  };
+
+
+
+  useEffect(() => {
+    getPostsFromApi();
+  }, []);
+
+  //const [posts, setPosts] = useState(postList);
+
   return (
     <View style={styles.container}>
-      <ScrollView>
-      <PostListItem></PostListItem>
-      </ScrollView>
-      
+      <FlatList data={data} keyExtractor={(item) => item.id}
+        onEndReached={getPostsFromApi}
+        onEndReachedThreshold={0.1}
+        contentContainerStyle={{ padding: 0 }}
+        ItemSeparatorComponent={() => (
+          <Separator width="90%" style={{ marginTop: 15 }}></Separator>
+        )}
+        renderItem={({ item }) => {
+          return (
+            <View>
+              <PostListItem post={item} style={styles.itemList} />
+            </View>
+          );
+        }}
+      />
     </View>
   );
 }
@@ -20,4 +66,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  itemList: {
+    marginTop: 15
+  }
 });
