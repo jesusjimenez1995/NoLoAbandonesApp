@@ -10,7 +10,7 @@ import axios from 'axios';
 export default function App() {
 
   const API_URL = 'http://192.168.18.132:4000/api/posts/latestPosts';
-  const [data, setPostsData] = useState([]);
+  const [data, setPostsData] = useState<any[]>([]);
   const [loading,setLoading] = useState(false);
   const [page, setPage] = useState(0);
 
@@ -45,12 +45,12 @@ export default function App() {
         onEndReachedThreshold={0.1}
         contentContainerStyle={{ padding: 0 }}
         ItemSeparatorComponent={() => (
-          <Separator width="90%" style={{ marginTop: 15 }}></Separator>
+          <Separator></Separator>
         )}
         renderItem={({ item }) => {
           return (
             <View>
-              <PostListItem post={item} style={styles.itemList} />
+              <PostListItem post={item}/>
             </View>
           );
         }}
@@ -67,6 +67,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   itemList: {
-    marginTop: 15
+    marginTop: 50
   }
 });

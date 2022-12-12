@@ -1,7 +1,11 @@
 import { Text, View, Image, StyleSheet } from "react-native";
 import Ionicons from '@expo/vector-icons/Ionicons';
 
-const PostListItem = ({post}) => {
+interface Props {
+    post: any,
+}
+
+const PostListItem: React.FC<Props> = ({post}) => {
     
     return (
         <View style={styles.container}>
@@ -16,7 +20,7 @@ const PostListItem = ({post}) => {
             </View>
             <View style={styles.row}>
                 <Text style={styles.location}>
-                    {post.province}{post.location}
+                {post.location}{"("}{post.province}{")"}
                 </Text>
                 <Text style={styles.date}>
                    {post.date}
